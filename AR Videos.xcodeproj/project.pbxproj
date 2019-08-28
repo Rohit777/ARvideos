@@ -16,6 +16,7 @@
 		B50EFD7D2302CAC600EAE601 /* test_video_1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B50EFD7C2302CAC500EAE601 /* test_video_1.mp4 */; };
 		B5748C192303972E00D2E80F /* test_video_3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B5748C172303972E00D2E80F /* test_video_3.mp4 */; };
 		B5748C1A2303972E00D2E80F /* test_video_2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B5748C182303972E00D2E80F /* test_video_2.mp4 */; };
+		B5F9C873231536E7005B9A30 /* fit_to_scan.png in Resources */ = {isa = PBXBuildFile; fileRef = B5F9C872231536E7005B9A30 /* fit_to_scan.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		B50EFD7C2302CAC500EAE601 /* test_video_1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_video_1.mp4; sourceTree = "<group>"; };
 		B5748C172303972E00D2E80F /* test_video_3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_video_3.mp4; sourceTree = "<group>"; };
 		B5748C182303972E00D2E80F /* test_video_2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_video_2.mp4; sourceTree = "<group>"; };
+		B5F9C872231536E7005B9A30 /* fit_to_scan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fit_to_scan.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		B50EFD672302C52B00EAE601 /* AR Videos */ = {
 			isa = PBXGroup;
 			children = (
+				B5F9C872231536E7005B9A30 /* fit_to_scan.png */,
 				B50EFD7C2302CAC500EAE601 /* test_video_1.mp4 */,
 				B5748C182303972E00D2E80F /* test_video_2.mp4 */,
 				B5748C172303972E00D2E80F /* test_video_3.mp4 */,
@@ -137,6 +140,7 @@
 				B5748C1A2303972E00D2E80F /* test_video_2.mp4 in Resources */,
 				B50EFD6B2302C52B00EAE601 /* art.scnassets in Resources */,
 				B50EFD752302C53100EAE601 /* LaunchScreen.storyboard in Resources */,
+				B5F9C873231536E7005B9A30 /* fit_to_scan.png in Resources */,
 				B50EFD7D2302CAC600EAE601 /* test_video_1.mp4 in Resources */,
 				B5748C192303972E00D2E80F /* test_video_3.mp4 in Resources */,
 				B50EFD722302C53100EAE601 /* Assets.xcassets in Resources */,
@@ -300,7 +304,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5QMBWX575R;
+				DEVELOPMENT_TEAM = DJ3L568VK9;
 				INFOPLIST_FILE = "AR Videos/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -320,7 +324,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5QMBWX575R;
+				DEVELOPMENT_TEAM = DJ3L568VK9;
 				INFOPLIST_FILE = "AR Videos/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

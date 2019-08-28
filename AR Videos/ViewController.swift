@@ -13,12 +13,23 @@ import AVFoundation
 
 
 class ViewController: UIViewController, ARSCNViewDelegate {
-
+    
     @IBOutlet var sceneView: ARSCNView!
     
-   
+    var num: Int = 0
+    var planeNode:SCNNode = SCNNode()
+    var videoURL_1 = Bundle.main.url(forResource: "test_video_1", withExtension: "mp4")!
+    var videoPlayer_1: AVPlayer = AVPlayer()
     
+    var videoURL_2 = Bundle.main.url(forResource: "test_video_2", withExtension: "mp4")!
+    var videoPlayer_2: AVPlayer = AVPlayer()
+    
+    let videoURL_3 = Bundle.main.url(forResource: "test_video_3", withExtension: "mp4")!
+    var videoPlayer_3: AVPlayer = AVPlayer()
 
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.delegate = self
@@ -34,7 +45,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         if let trackingImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: Bundle.main){
             configuration.trackingImages = trackingImages
-            configuration.maximumNumberOfTrackedImages = 3
+            configuration.maximumNumberOfTrackedImages = 1
         }
         
         sceneView.session.run(configuration)
@@ -49,8 +60,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         
         let node = SCNNode()
-//        let videoURL: URL
-//        let videoPlayer: AVPlayer
+        //        let videoURL: URL
+        //        let videoPlayer: AVPlayer
         
         if let imageAnchor = anchor as? ARImageAnchor{
             let size = imageAnchor.referenceImage.physicalSize
@@ -71,43 +82,35 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             mssgbuttonNode = mssgbuttonScene!.rootNode
             borderframeNode = borderframeScene!.rootNode
             
+            
             if imageAnchor.referenceImage.name == "test_image_1"{
-                let videoURL_1 = Bundle.main.url(forResource: "test_video_1", withExtension: "mp4")!
-                let videoPlayer_1 = AVPlayer(url: videoURL_1)
+                
+                videoPlayer_1 = AVPlayer(url: videoURL_1)
                 plane.firstMaterial?.diffuse.contents = videoPlayer_1
+                videoPlayer_1.seek(to: CMTime.zero)
                 videoPlayer_1.play()
-                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: videoPlayer_1.currentItem, queue: nil) { (notification) in
-                    videoPlayer_1.seek(to: CMTime.zero)
-                    videoPlayer_1.play()
-                    print("Looping Video")
-                }
+                
             }else if imageAnchor.referenceImage.name == "test_image_2"{
-                let videoURL_2 = Bundle.main.url(forResource: "test_video_2", withExtension: "mp4")!
-                let videoPlayer_2 = AVPlayer(url: videoURL_2)
+                
+                videoPlayer_2 = AVPlayer(url: videoURL_2)
                 plane.firstMaterial?.diffuse.contents = videoPlayer_2
+                videoPlayer_2.seek(to: CMTime.zero)
                 videoPlayer_2.play()
-                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: videoPlayer_2.currentItem, queue: nil) { (notification) in
-                    videoPlayer_2.seek(to: CMTime.zero)
-                    videoPlayer_2.play()
-                    print("Looping Video")
-                }
-
+                
             }else if imageAnchor.referenceImage.name == "test_image_3"{
-                let videoURL_3 = Bundle.main.url(forResource: "test_video_3", withExtension: "mp4")!
-                let videoPlayer_3 = AVPlayer(url: videoURL_3)
+                
+                videoPlayer_3 = AVPlayer(url: videoURL_3)
                 plane.firstMaterial?.diffuse.contents = videoPlayer_3
+                videoPlayer_3.seek(to: CMTime.zero)
                 videoPlayer_3 .play()
-                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: videoPlayer_3.currentItem, queue: nil) { (notification) in
-                    videoPlayer_3.seek(to: CMTime.zero)
-                    videoPlayer_3.play()
-                    print("Looping Video")
-                }
+
             }
             
             
             
             
-            let planeNode = SCNNode(geometry: plane)
+            
+            planeNode = SCNNode(geometry: plane)
             planeNode.eulerAngles.x = -.pi / 2
             
             callbuttonNode.position = SCNVector3(size.width/1.67, size.height/3, 0)
@@ -120,8 +123,49 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             planeNode.addChildNode(mssgbuttonNode)
             planeNode.addChildNode(borderframeNode)
             node.addChildNode(planeNode)
+            
+        
+            
         }
+        
         return node
+    }
+    
+    
+    
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        guard let imageAnchor = anchor as? ARImageAnchor  else {
+            return
+        }
+        if (!imageAnchor.isTracked){
+            if imageAnchor.referenceImage.name == "test_image_1"{
+                print("Not Tracking 1")
+                videoPlayer_1.seek(to: CMTime.zero)
+                fit_to_scan.adjustsImageWhenHighlighted = NO;
+                
+            }else if imageAnchor.referenceImage.name == "test_image_2"{
+                print("Not Tracking 2")
+                videoPlayer_2.seek(to: CMTime.zero)
+                
+            }else if imageAnchor.referenceImage.name == "test_image_3"{
+                print("Not Tracking 3")
+                videoPlayer_3.seek(to: CMTime.zero)
+                
+            }
+        }else if (imageAnchor.isTracked){
+            if imageAnchor.referenceImage.name == "test_image_1"{
+                print("Tracking 1")
+                videoPlayer_1.play()
+            }else if imageAnchor.referenceImage.name == "test_image_2"{
+                print("Tracking 2")
+                videoPlayer_2.play()
+            }else if imageAnchor.referenceImage.name == "test_image_3"{
+                print("Tracking 3")
+                videoPlayer_3.play()
+            }
+        }
+        
+        
     }
     
     @objc func handleTap(sender: UITapGestureRecognizer){
@@ -131,7 +175,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if !hitTest.isEmpty{
             let result = hitTest.first!
             let name = result.node.parent?.name
-//            let geometry = result.node.geometry
+            //            let geometry = result.node.geometry
             if name == "Call"{
                 UIApplication.shared.open(URL(string: "tel://1111111111")!, options: [:], completionHandler: nil)
                 print("call is pressed")
@@ -148,4 +192,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
     }
+    
+    
 }
