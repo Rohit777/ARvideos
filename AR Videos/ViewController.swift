@@ -15,7 +15,9 @@ import AVFoundation
 class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var frameImage: UIImageView!
     
+    //@IBOutlet weak var frame: UIImageView!
     var num: Int = 0
     var planeNode:SCNNode = SCNNode()
     var videoURL_1 = Bundle.main.url(forResource: "test_video_1", withExtension: "mp4")!
@@ -26,6 +28,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     let videoURL_3 = Bundle.main.url(forResource: "test_video_3", withExtension: "mp4")!
     var videoPlayer_3: AVPlayer = AVPlayer()
+    
+    //var image: UIImage = UIImage(named: "fit_to_scan")!
+
 
     
     
@@ -34,6 +39,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
         sceneView.delegate = self
         sceneView.autoenablesDefaultLighting = true
+        
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         sceneView.addGestureRecognizer(tapGestureRecognizer)
@@ -140,27 +146,33 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         if (!imageAnchor.isTracked){
             if imageAnchor.referenceImage.name == "test_image_1"{
                 print("Not Tracking 1")
+                frameImage.isHidden = false
                 videoPlayer_1.seek(to: CMTime.zero)
-                fit_to_scan.adjustsImageWhenHighlighted = NO;
                 
             }else if imageAnchor.referenceImage.name == "test_image_2"{
                 print("Not Tracking 2")
+                frameImage.isHidden = false
                 videoPlayer_2.seek(to: CMTime.zero)
                 
             }else if imageAnchor.referenceImage.name == "test_image_3"{
                 print("Not Tracking 3")
+                frameImage.isHidden = false
+                
                 videoPlayer_3.seek(to: CMTime.zero)
                 
             }
         }else if (imageAnchor.isTracked){
             if imageAnchor.referenceImage.name == "test_image_1"{
                 print("Tracking 1")
+                frameImage.isHidden = true
                 videoPlayer_1.play()
             }else if imageAnchor.referenceImage.name == "test_image_2"{
                 print("Tracking 2")
+                frameImage.isHidden = true
                 videoPlayer_2.play()
             }else if imageAnchor.referenceImage.name == "test_image_3"{
                 print("Tracking 3")
+               frameImage.isHidden = true
                 videoPlayer_3.play()
             }
         }
